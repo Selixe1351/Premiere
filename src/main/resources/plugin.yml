@@ -1,0 +1,5 @@
+name: Premiere
+version: '${version}'
+main: dev.selixe.Premiere
+api-version: 1.20
+authors: [ Selixe ]
