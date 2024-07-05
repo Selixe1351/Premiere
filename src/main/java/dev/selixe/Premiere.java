@@ -1,8 +1,8 @@
 package dev.selixe;
 
-import dev.selixe.listener.SkullInteractListener;
+import dev.selixe.command.CommandHandler;
+import dev.selixe.command.impl.ColorCommand;
 import dev.selixe.menu.MenuAPI;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -22,8 +22,7 @@ public class Premiere extends JavaPlugin {
     @Override
     public void onEnable() {
         new MenuAPI(this);
-
-        Bukkit.getPluginManager().registerEvents(new SkullInteractListener(), this);
+        CommandHandler.registerCommands(ColorCommand.class, this);
     }
 
     @Override
