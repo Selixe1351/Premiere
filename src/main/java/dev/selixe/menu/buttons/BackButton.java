@@ -2,9 +2,12 @@ package dev.selixe.menu.buttons;
 
 import dev.selixe.menu.Button;
 import dev.selixe.menu.Menu;
+import dev.selixe.menu.util.Heads;
 import dev.selixe.utils.bukkit.ColorUtils;
 import dev.selixe.utils.bukkit.Constants;
 import dev.selixe.utils.bukkit.ItemBuilder;
+import dev.selixe.utils.bukkit.SkullCreator;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -19,8 +22,8 @@ public class BackButton extends Button {
 
     @Override
     public ItemStack getButtonItem(final Player player) {
-        final ItemBuilder item = new ItemBuilder(Material.ARROW).name(ColorUtils.translate("&8" + Constants.ARROW_LEFT + " &7Go back"));
-        return item.build();
+        return new ItemBuilder(SkullCreator.itemFromBase64(Heads.PREVIOUS_PAGE.getBase()))
+                .name(ChatColor.translateAlternateColorCodes('&', "&8\u25c0 &7Previous Page")).build();
     }
 
     @Override
