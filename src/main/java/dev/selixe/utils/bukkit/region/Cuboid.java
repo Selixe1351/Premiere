@@ -69,11 +69,17 @@ public class Cuboid implements Cloneable, ConfigurationSerializable {
     }
 
     public boolean contains(int x, int y, int z) {
-        return x >= minX && x <= maxX &&
-                y >= minY && y <= maxY &&
-                z >= minZ && z <= maxZ;
-    }
+        int effectiveMinX = Math.min(this.minX, this.maxX);
+        int effectiveMaxX = Math.max(this.minX, this.maxX);
+        int effectiveMinY = Math.min(this.minY, this.maxY);
+        int effectiveMaxY = Math.max(this.minY, this.maxY);
+        int effectiveMinZ = Math.min(this.minZ, this.maxZ);
+        int effectiveMaxZ = Math.max(this.minZ, this.maxZ);
 
+        return x >= effectiveMinX && x <= effectiveMaxX &&
+                y >= effectiveMinY && y <= effectiveMaxY &&
+                z >= effectiveMinZ && z <= effectiveMaxZ;
+    }
     public boolean contains(Position position) {
         return contains((int) position.getX(), (int) position.getY(), (int) position.getZ());
     }
