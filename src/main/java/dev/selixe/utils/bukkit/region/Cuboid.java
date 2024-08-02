@@ -33,12 +33,20 @@ public class Cuboid implements Cloneable, ConfigurationSerializable {
 
     public Cuboid(World world, int maxX, int maxY, int maxZ, int minX, int minY, int minZ) {
         this.world = world.getName();
-        this.maxX = maxX;
-        this.maxY = maxY;
-        this.maxZ = maxZ;
-        this.minX = minX;
-        this.minY = minY;
-        this.minZ = minZ;
+
+        int effectiveMinX = Math.min(minX, maxX);
+        int effectiveMaxX = Math.max(minX, maxX);
+        int effectiveMinY = Math.min(minY, maxY);
+        int effectiveMaxY = Math.max(minY, maxY);
+        int effectiveMinZ = Math.min(minZ, maxZ);
+        int effectiveMaxZ = Math.max(minZ, maxZ);
+
+        this.maxX = effectiveMaxX;
+        this.maxY = effectiveMaxY;
+        this.maxZ = effectiveMaxZ;
+        this.minX = effectiveMinX;
+        this.minY = effectiveMinY;
+        this.minZ = effectiveMinZ;
     }
 
     public Position getMaxPosition() {

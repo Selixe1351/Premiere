@@ -105,9 +105,6 @@ public final class InventoryUpdate {
                 newTitle = newTitle.substring(0, 32);
             }
 
-            // Create new title.
-            Object title = chatMessageConstructor.newInstance(newTitle != null ? newTitle : "", new Object[]{});
-
             // Get activeContainer from EntityPlayer.
             Object activeContainer = activeContainerField.get(entityPlayer);
 
@@ -152,8 +149,8 @@ public final class InventoryUpdate {
             // Create packet.
             Object packet =
                     (useContainers()) ?
-                            packetPlayOutOpenWindowConstructor.newInstance(windowId, object, title) :
-                            packetPlayOutOpenWindowConstructor.newInstance(windowId, object, title, size);
+                            packetPlayOutOpenWindowConstructor.newInstance(windowId, object, newTitle) :
+                            packetPlayOutOpenWindowConstructor.newInstance(windowId, object, newTitle, size);
 
             // Send packet sync.
             ReflectionUtils.sendPacketSync(player, packet);

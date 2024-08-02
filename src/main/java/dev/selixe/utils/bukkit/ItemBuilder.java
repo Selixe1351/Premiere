@@ -43,6 +43,15 @@ public class ItemBuilder implements Cloneable{
         return this;
     }
 
+    public ItemBuilder model(int model) {
+        if (this.meta == null) {
+            this.meta = this.stack.getItemMeta();
+        }
+
+        meta.setCustomModelData(model);
+        return this;
+    }
+
     public ItemBuilder durability(short amount) {
         this.stack.setDurability(amount);
         return this;

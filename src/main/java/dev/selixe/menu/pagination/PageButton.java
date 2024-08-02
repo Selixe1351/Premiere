@@ -23,15 +23,15 @@ public class PageButton extends Button {
     @Override
     public ItemStack getButtonItem(final Player player) {
         ItemBuilder builder = new ItemBuilder(SkullCreator.itemFromBase64(this.mod > 0 ? Heads.NEXT_PAGE.getBase() : Heads.PREVIOUS_PAGE.getBase()))
-                .name(ChatColor.translateAlternateColorCodes('&', (this.mod > 0) ? "&8\u00bb &7Next Page" : "&8\u00ab &7Previous Page"));
-        return hasNext(player) ? builder.build() : builder.lore("&cNo more pages.").build();
+                .name(ChatColor.translateAlternateColorCodes('&', (this.mod > 0) ? "&8\u25b6 &7Next Page" : "&8\u25c0 &7Previous Page"));
+        return builder.build();
     }
+
     @Override
     public void clicked(final Player player, final int i, final ClickType clickType, final int hb) {
         if (this.hasNext(player)) {
             this.menu.modPage(player, this.mod);
             Button.playNeutral(player);
-            InventoryUpdate.updateInventory(Premiere.getInstance(), player, menu.getTitle(player));
         }
     }
 

@@ -32,10 +32,16 @@ public class Region implements Cloneable, ConfigurationSerializable {
 
     public Region(World world, int maxX, int maxZ, int minX, int minZ) {
         this.world = world.getName();
-        this.maxX = maxX;
-        this.maxZ = maxZ;
-        this.minX = minX;
-        this.minZ = minZ;
+
+        int effectiveMinX = Math.min(minX, maxX);
+        int effectiveMaxX = Math.max(minX, maxX);
+        int effectiveMinZ = Math.min(minZ, maxZ);
+        int effectiveMaxZ = Math.max(minZ, maxZ);
+
+        this.maxX = effectiveMaxX;
+        this.maxZ = effectiveMaxZ;
+        this.minX = effectiveMinX;
+        this.minZ = effectiveMinZ;
     }
 
     public Position getMaxPosition() {

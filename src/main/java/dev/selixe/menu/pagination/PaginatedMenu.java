@@ -28,7 +28,7 @@ public abstract class PaginatedMenu extends Menu {
 
     @Override
     public String getTitle(final Player player) {
-        return ChatColor.translateAlternateColorCodes('&', this.getPrePaginatedTitle(player) + " &8(&7" + this.page + "/" + this.getPages(player) + "&8)");
+        return ChatColor.translateAlternateColorCodes('&', this.getPrePaginatedTitle(player));
     }
 
     public final void modPage(final Player player, final int mod) {
@@ -50,7 +50,7 @@ public abstract class PaginatedMenu extends Menu {
         final int minIndex = (int) ((this.page - 1) * (double) this.getMaxItemsPerPage(player));
         final int maxIndex = (int) (this.page * (double) this.getMaxItemsPerPage(player));
         final HashMap<Integer, Button> buttons = new HashMap<>();
-        for (int i : new int[]{0, 1, 7, 8, 9, 17, 27, 35, 36, 37, 43, 44}) {
+        for (int i : new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 36, 37, 38, 40, 42, 43, 44}) {
             buttons.put(i, new GlassButton(getGlassColor()));
         }
         buttons.put(39, new PageButton(-1, this));
@@ -81,7 +81,7 @@ public abstract class PaginatedMenu extends Menu {
     }
 
     public int getMaxItemsPerPage(final Player player) {
-        return 15;
+        return 27;
     }
 
     public Map<Integer, Button> getGlobalButtons(final Player player) {
