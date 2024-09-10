@@ -58,13 +58,8 @@ public abstract class PaginatedMenu extends Menu {
         for (final Map.Entry<Integer, Button> entry : this.getAllPagesButtons(player).entrySet()) {
             int ind = entry.getKey();
             if (ind >= minIndex && ind < maxIndex) {
-                ind -= (int) (this.getMaxItemsPerPage(player) * (double) (this.page - 1)) - 11;
+                ind -= (int) (this.getMaxItemsPerPage(player) * (double) (this.page - 1)) - 9;
 
-                if (ind > 15 && ind <= 20) {
-                    ind += 4;
-                } else if (ind > 20 && ind <= 25) {
-                    ind += 8;
-                }
                 buttons.put(ind, entry.getValue());
             }
         }

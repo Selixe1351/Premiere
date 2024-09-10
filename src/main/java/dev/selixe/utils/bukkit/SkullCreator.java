@@ -5,7 +5,6 @@ import com.mojang.authlib.properties.Property;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.SkullType;
 import org.bukkit.block.Block;
 import org.bukkit.block.Skull;
 import org.bukkit.inventory.ItemStack;
@@ -129,7 +128,7 @@ public class SkullCreator {
         } catch (IllegalArgumentException var3) {
             block.setType(Material.valueOf("SKULL"), false);
             Skull state = (Skull)block.getState();
-            state.setSkullType(SkullType.PLAYER);
+            state.setType(Material.PLAYER_HEAD);
             state.update(false, false);
         }
 

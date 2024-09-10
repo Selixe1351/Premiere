@@ -97,7 +97,7 @@ public class ItemBuilder implements Cloneable{
             this.meta = this.stack.getItemMeta();
         }
 
-        this.meta.addEnchant(Enchantment.DURABILITY, 10, glow);
+        this.meta.addEnchant(Enchantment.UNBREAKING, 10, glow);
         this.meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         return this;
     }
