@@ -73,6 +73,11 @@ public class ItemBuilder implements Cloneable{
     }
 
     public ItemBuilder enchant(Enchantment enchantment, int level) {
+        this.stack.addEnchantment(enchantment, level);
+        return this;
+    }
+
+    public ItemBuilder unsafeEnchant(Enchantment enchantment, int level) {
         this.stack.addUnsafeEnchantment(enchantment, level);
         return this;
     }
