@@ -12,13 +12,12 @@ public enum Direction {
     NORTH, SOUTH, EAST, WEST;
 
     public Direction getOpposite() {
-        switch (this) {
-            case EAST: return WEST;
-            case WEST: return EAST;
-            case NORTH: return SOUTH;
-            case SOUTH: return NORTH;
-        }
-        return SOUTH;
+        return switch (this) {
+            case EAST -> WEST;
+            case WEST -> EAST;
+            case NORTH -> SOUTH;
+            case SOUTH -> NORTH;
+        };
     }
 
     public static Direction getFromYaw(float yaw) {
