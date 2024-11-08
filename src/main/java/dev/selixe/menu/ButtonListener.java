@@ -53,6 +53,9 @@ public class ButtonListener implements Listener {
         final Player player = (Player) event.getWhoClicked();
         final Menu openMenu = Menu.currentlyOpenedMenus.get(player.getUniqueId());
         if (openMenu != null) {
+            if (event.getRawSlot() > openMenu.getSize()) {
+                openMenu.onSelfClick(player, event.getSlot());
+            }
             if (event.getSlot() != event.getRawSlot()) {
                 if (event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT) {
                     event.setCancelled(true);

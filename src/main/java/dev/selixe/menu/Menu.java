@@ -13,6 +13,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 public abstract class Menu {
@@ -177,6 +178,9 @@ public abstract class Menu {
     }
 
     public void onClose(Player player) {
+    }
+
+    public void onSelfClick(Player player, int slot) {
     }
 
     protected void surroundButtons(boolean full, Map<Integer, Button> buttons, final ItemStack itemStack) {
