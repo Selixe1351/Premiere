@@ -1,14 +1,18 @@
 package dev.selixe.utils.bukkit;
 
 import com.google.common.base.Preconditions;
+import dev.selixe.Premiere;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Copyright (c) 2023 Selixe
@@ -137,6 +141,45 @@ public class ItemBuilder implements Cloneable{
     public ItemBuilder data(int data) {
         this.stack.setDurability((short)data);
         return this;
+    }
+
+    public ItemBuilder makeUnique() {
+        if (this.meta == null) {
+            this.meta = this.stack.getItemMeta();
+        }
+        if (this.meta != null) {
+            this.meta.getPersistentDataContainer().set(
+                    new NamespacedKey(Premiere.getInstance(), "unique_id"),
+                    PersistentDataType.STRING,
+                    UUID.randomUUID().toString()
+            );
+            this.stack.setItemMeta(this.meta);
+        }
+
+        return this;
+    }
+
+    public static boolean isSimilar(ItemStack one, ItemStack two) {
+        if (one == null || two == null) return false;
+
+        if (one.getType() != two.getType()) return false;
+
+        ItemMeta metaOne = one.getItemMeta();
+        ItemMeta metaTwo = two.getItemMeta();
+
+        if (metaOne == null && metaTwo == null) return true;
+
+        if (metaOne == null || metaTwo == null) return false;
+
+        String nameOne = metaOne.hasDisplayName() ? metaOne.getDisplayName() : null;
+        String nameTwo = metaTwo.hasDisplayName() ? metaTwo.getDisplayName() : null;
+        if (nameOne != null && nameTwo != null && !nameOne.equalsIgnoreCase(nameTwo)) return false;
+        if ((nameOne == null) != (nameTwo == null)) return false;
+
+        List<String> loreOne = metaOne.hasLore() ? metaOne.getLore() : null;
+        List<String> loreTwo = metaTwo.hasLore() ? metaTwo.getLore() : null;
+        if (loreOne != null && loreTwo != null && !loreOne.equals(loreTwo)) return false;
+        return (loreOne == null) == (loreTwo == null);
     }
 
     public ItemStack build() {

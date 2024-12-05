@@ -20,6 +20,7 @@ import java.util.UUID;
 
 @UtilityClass
 public class SkullCreator {
+
     private boolean warningPosted = false;
     private Field blockProfileField;
     private Method metaSetProfileMethod;
@@ -61,11 +62,6 @@ public class SkullCreator {
     }
 
     public ItemStack itemWithUuid(ItemStack item, UUID id) {
-        notNull(item, "item");
-        notNull(id, "id");
-        SkullMeta meta = (SkullMeta)item.getItemMeta();
-        meta.setOwner(String.valueOf(Bukkit.getOfflinePlayer(id)));
-        item.setItemMeta(meta);
         return item;
     }
 
@@ -86,52 +82,6 @@ public class SkullCreator {
             item.setItemMeta(meta);
             return item;
         }
-    }
-
-    public void blockWithName(Block block, String name) {
-        notNull(block, "block");
-        notNull(name, "name");
-        Skull state = (Skull)block.getState();
-        state.setOwner(String.valueOf(Bukkit.getOfflinePlayer(name)));
-        state.update(false, false);
-    }
-
-    public void blockWithUuid(Block block, UUID id) {
-        notNull(block, "block");
-        notNull(id, "id");
-        setToSkull(block);
-        Skull state = (Skull)block.getState();
-        state.setOwner(String.valueOf(Bukkit.getOfflinePlayer(id)));
-        state.update(false, false);
-    }
-
-    public void blockWithUrl(Block block, String url) {
-        notNull(block, "block");
-        notNull(url, "url");
-        blockWithBase64(block, urlToBase64(url));
-    }
-
-    public void blockWithBase64(Block block, String base64) {
-        notNull(block, "block");
-        notNull(base64, "base64");
-        setToSkull(block);
-        Skull state = (Skull)block.getState();
-        mutateBlockState(state, base64);
-        state.update(false, false);
-    }
-
-    private void setToSkull(Block block) {
-        checkLegacy();
-
-        try {
-            block.setType(Material.valueOf("PLAYER_HEAD"), false);
-        } catch (IllegalArgumentException var3) {
-            block.setType(Material.valueOf("SKULL"), false);
-            Skull state = (Skull)block.getState();
-            state.setType(Material.PLAYER_HEAD);
-            state.update(false, false);
-        }
-
     }
 
     private void notNull(Object o, String name) {
@@ -157,20 +107,6 @@ public class SkullCreator {
         GameProfile profile = new GameProfile(id, "Player");
         profile.getProperties().put("textures", new Property("textures", b64));
         return profile;
-    }
-
-    private void mutateBlockState(Skull block, String b64) {
-        try {
-            if (blockProfileField == null) {
-                blockProfileField = block.getClass().getDeclaredField("profile");
-                blockProfileField.setAccessible(true);
-            }
-
-            blockProfileField.set(block, makeProfile(b64));
-        } catch (IllegalAccessException | NoSuchFieldException var3) {
-            var3.printStackTrace();
-        }
-
     }
 
     private void mutateItemMeta(SkullMeta meta, String b64) {

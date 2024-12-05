@@ -22,6 +22,7 @@ public abstract class Menu {
     private boolean autoUpdate = false;
     private boolean updateAfterClick = true;
     private boolean closedByMenu = false;
+    private boolean canClose;
     private boolean placeholder = false;
     private Button placeholderButton = Button.placeholder(Material.BLACK_STAINED_GLASS_PANE, (byte) 15, " ");
     private Inventory inventory;
@@ -44,6 +45,10 @@ public abstract class Menu {
 
     public void setAutoUpdate(boolean autoUpdate) {
         this.autoUpdate = autoUpdate;
+    }
+
+    public boolean canClose(Player player) {
+        return true;
     }
 
     public boolean isUpdateAfterClick() {

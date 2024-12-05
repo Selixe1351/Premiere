@@ -2,6 +2,7 @@ package dev.selixe.menu;
 
 import dev.selixe.Premiere;
 import dev.selixe.menu.pagination.PaginatedMenu;
+import dev.selixe.utils.bukkit.Tasks;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +28,9 @@ public class ButtonListener implements Listener {
         final Menu openMenu = Menu.currentlyOpenedMenus.get(player.getUniqueId());
         if (openMenu != null) {
             openMenu.setInventory(player.getOpenInventory().getTopInventory());
-            openMenu.onClose(player);
+            if (!openMenu.isClosedByMenu()) {
+                openMenu.onClose(player);
+            }
             Menu.currentlyOpenedMenus.remove(player.getUniqueId());
             if (openMenu instanceof PaginatedMenu) {
                 return;
@@ -42,7 +45,9 @@ public class ButtonListener implements Listener {
         final Menu openMenu = Menu.currentlyOpenedMenus.get(player.getUniqueId());
         if (openMenu != null) {
             openMenu.setInventory(event.getInventory());
-            openMenu.onClose(player);
+            if (!openMenu.isClosedByMenu()) {
+                openMenu.onClose(player);
+            }
             Menu.currentlyOpenedMenus.remove(player.getUniqueId());
         }
         player.setMetadata("scanglitch", new FixedMetadataValue(this.plugin, true));

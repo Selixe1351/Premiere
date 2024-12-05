@@ -35,6 +35,20 @@ public class ScoreboardManager {
         this.adapter = adapter;
     }
 
+    public ScoreboardManager(JavaPlugin plugin, ScoreboardAdapter adapter, long ticks) {
+        instance = this;
+        this.plugin = plugin;
+        this.ticks = ticks;
+        Premiere.getInstance().getServer().getPluginManager().registerEvents(new ScoreboardListener(this), this.plugin);
+        this.plugin.getServer().getOnlinePlayers().forEach(this::setup);
+        if (this.getRunnable() == null) {
+            this.runnable = new ScoreboardRunnable(this);
+            this.plugin.getServer().getScheduler().runTaskTimer(this.plugin, this.runnable, this.ticks, this.ticks);
+        }
+
+        this.adapter = adapter;
+    }
+
     public Scoreboard setup(Player player) {
         return new Scoreboard(player);
     }
