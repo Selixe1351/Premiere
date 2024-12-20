@@ -103,6 +103,41 @@ public class Region implements Cloneable, ConfigurationSerializable {
         return overlaps(location.getBlockX(), location.getBlockZ());
     }
 
+    public int[] getDimensions() {
+        return new int[]{getMaxX() - getMinX(), getMaxZ() - getMinZ()};
+    }
+
+    public double getArea() {
+        return Math.abs(getMaxZ() - getMinX()) * Math.abs(getMaxZ() - getMinZ());
+    }
+
+    public boolean isNearby(Position position, int distance) {
+        return isNearby(position, null, distance);
+    }
+
+    public boolean isNearby(Position position, World world, int distance) {
+        double closestX = clamp(position.getX(), position.getX(), position.getX());
+        double closestZ = clamp(position.getZ(), position.getZ(), position.getZ());
+
+        if (world == null) {
+            world = Bukkit.getWorld("world");
+        }
+
+        if (world == null) return false;
+
+        if (!getWorld().equalsIgnoreCase(world.getName())) return false;
+
+        Location closestPoint = new Location(world, closestX, position.getY(), closestZ);
+
+        double distanceSquared = Math.pow(position.getX() - closestPoint.getX(), 2) + Math.pow(position.getY() - closestPoint.getY(), 2) + Math.pow(position.getZ() - closestPoint.getZ(), 2);
+
+        return distanceSquared <= distance * distance;
+    }
+
+    private double clamp(double value, double min, double max) {
+        return Math.max(min, Math.min(max, value));
+    }
+
     public List<Chunk> getChunks() {
         List<Chunk> toReturn = Lists.newArrayList();
         World w = Bukkit.getWorld(this.world);

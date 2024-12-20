@@ -38,6 +38,10 @@ public class Position implements Cloneable, ConfigurationSerializable {
         return new Location(Bukkit.getWorld(world), x, y, z);
     }
 
+    public Position ofLocation(Location location) {
+        return new Position(location.getX(), location.getY(), location.getZ());
+    }
+
     public Block getBlock(String world) {
         return toLocation(world).getBlock();
     }

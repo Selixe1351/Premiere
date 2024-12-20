@@ -106,6 +106,10 @@ public class Cuboid implements Cloneable, ConfigurationSerializable {
                         minZ > cuboid.getMaxZ());
     }
 
+    public double getVolume() {
+        return Math.abs(getMaxZ() - getMinX()) * Math.abs(getMaxY() - getMinY()) * Math.abs(getMaxZ() - getMinZ());
+    }
+
     public boolean overlaps(int x, int y, int z) {
         return !(x > maxX || y > maxY || z > maxZ || minZ > x || minY > y || minZ > z);
     }
@@ -117,6 +121,16 @@ public class Cuboid implements Cloneable, ConfigurationSerializable {
     public boolean overlaps(Location location) {
         return overlaps(location.getBlockX(), location.getBlockY(), location.getBlockZ());
     }
+
+    public int[] getDimensions() {
+        return new int[]{getMaxX() - getMinX(), getMaxY() - getMinY(), getMaxZ() - getMinZ()};
+    }
+
+    public int getHeight() {
+        return getDimensions()[1];
+    }
+
+
 
     public List<Chunk> getChunks() {
         List<Chunk> toReturn = Lists.newArrayList();

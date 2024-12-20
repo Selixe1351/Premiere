@@ -25,6 +25,14 @@ public class ItemUtils {
         player.updateInventory();
     }
 
+    public void give(Player player, ItemStack item) {
+        if (player.getInventory().firstEmpty() == -1) {
+            player.getWorld().dropItem(player.getLocation(), item);
+        } else {
+            player.getInventory().addItem(item);
+        }
+    }
+
     public boolean isEmpty(ItemStack item){
         return item == null || item.getType() == Material.AIR;
     }
