@@ -24,7 +24,6 @@ public class Premiere extends JavaPlugin {
         new MenuAPI(this);
         CommandHandler.registerCommands(ColorCommand.class, this);
 
-        CommandHandler.registerProcessors("dev.selixe.command.processors", this);
     }
 
     @Override

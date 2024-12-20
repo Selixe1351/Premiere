@@ -10,7 +10,7 @@ public class IntegerProcessor extends Processor<Integer> {
             return Integer.parseInt(supplied);
         } catch(Exception ex) {
             sender.sendMessage(ChatColor.RED + "The value you entered '" + supplied + "' is an invalid integer.");
-            return 0;
+            return null;
         }
     }
 }

@@ -1,8 +1,7 @@
-package dev.selixe.command.processors;
+package dev.selixe.command.parameter.impl;
 
 import dev.selixe.command.parameter.Processor;
 import dev.selixe.utils.bukkit.ColorUtils;
-import dev.selixe.utils.bukkit.GradientBuilder;
 import org.bukkit.command.CommandSender;
 
 import java.awt.*;

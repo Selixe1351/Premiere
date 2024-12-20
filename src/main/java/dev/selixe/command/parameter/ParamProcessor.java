@@ -12,6 +12,7 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -71,6 +72,7 @@ public class ParamProcessor {
         processors.put(boolean.class, new BooleanProcessor());
         processors.put(float.class, new FloatProcessor());
 
+        processors.put(Color.class, new ColorProcessor());
         processors.put(ChatColor.class, new ChatColorProcessor());
         processors.put(Player.class, new PlayerProcessor());
         processors.put(OfflinePlayer.class, new OfflinePlayerProcessor());
