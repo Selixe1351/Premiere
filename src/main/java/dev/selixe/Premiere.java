@@ -2,7 +2,9 @@ package dev.selixe;
 
 import dev.selixe.command.CommandHandler;
 import dev.selixe.command.impl.ColorCommand;
+import dev.selixe.event.PotionEffectEndEvent;
 import dev.selixe.menu.MenuAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -24,6 +26,9 @@ public class Premiere extends JavaPlugin {
         new MenuAPI(this);
         CommandHandler.registerCommands(ColorCommand.class, this);
 
+        CommandHandler.registerProcessors("dev.selixe.command.processors", this);
+
+        Bukkit.getPluginManager().registerEvents(new PotionEffectEndEvent.PotionEffectEndListener(), this);
     }
 
     @Override
