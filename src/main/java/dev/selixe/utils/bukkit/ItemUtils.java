@@ -3,6 +3,7 @@ package dev.selixe.utils.bukkit;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -16,9 +17,24 @@ import org.bukkit.inventory.ItemStack;
 public class ItemUtils {
 
     public void consume(Player player) {
-        ItemStack item = player.getInventory().getItemInHand();
+
+        boolean offHand = false;
+        ItemStack item = player.getInventory().getItem(EquipmentSlot.HAND);
+
+        if (item.getType().isAir()) {
+            item = player.getInventory().getItem(EquipmentSlot.OFF_HAND);
+            offHand = true;
+            if (item.getType().isAir()) {
+                return;
+            }
+        }
+
         if (item.getAmount() == 1) {
-            player.getInventory().remove(item);
+            if (offHand) {
+                player.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
+            } else {
+                player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+            }
         } else {
             item.setAmount(item.getAmount() - 1);
         }

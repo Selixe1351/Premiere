@@ -105,7 +105,7 @@ public class ItemBuilder implements Cloneable{
             this.meta = this.stack.getItemMeta();
         }
 
-        this.meta.addItemFlags(itemFlag);
+        this.stack.addItemFlags(itemFlag);
         return this;
     }
 

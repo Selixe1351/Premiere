@@ -76,4 +76,12 @@ public class CommandHandler {
                 });
     }
 
+    /**
+     * Registers the processor in the class
+     * @param processorClass Class
+     */
+    @SneakyThrows
+    public static void registerProcessor(Class<?> processorClass, Plugin plugin) {
+        registerProcessors(processorClass.getPackageName(), plugin);
+    }
 }
