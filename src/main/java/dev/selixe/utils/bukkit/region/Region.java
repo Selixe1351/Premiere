@@ -1,6 +1,7 @@
 package dev.selixe.utils.bukkit.region;
 
 import com.google.common.collect.Lists;
+import dev.selixe.snapshot.Snapshotable;
 import dev.selixe.utils.bukkit.location.Position;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.util.NumberConversions;
 
@@ -22,7 +24,7 @@ import java.util.*;
 
 @Getter
 @Setter
-public class Region implements Cloneable, ConfigurationSerializable {
+public class Region implements Cloneable, ConfigurationSerializable, Snapshotable {
 
     private String world;
     private int maxX;
@@ -125,7 +127,7 @@ public class Region implements Cloneable, ConfigurationSerializable {
 
         if (world == null) return false;
 
-        if (!getWorld().equalsIgnoreCase(world.getName())) return false;
+        if (!getWorld().getName().equalsIgnoreCase(world.getName())) return false;
 
         Location closestPoint = new Location(world, closestX, position.getY(), closestZ);
 
@@ -133,6 +135,8 @@ public class Region implements Cloneable, ConfigurationSerializable {
 
         return distanceSquared <= distance * distance;
     }
+
+
 
     private double clamp(double value, double min, double max) {
         return Math.max(min, Math.min(max, value));
@@ -160,6 +164,19 @@ public class Region implements Cloneable, ConfigurationSerializable {
         return toReturn;
     }
 
+    public List<Location> getLocations() {
+        return new ArrayList<>(getPositions()).stream().map(position -> position.toLocation(Bukkit.getWorld("world"))).toList();
+    }
+
+    public List<Location> getLocations(World world) {
+        return new ArrayList<>(getPositions()).stream().map(position -> position.toLocation(world)).toList();
+    }
+
+    public List<Block> getBlocks(World world) {
+        return new ArrayList<>(getLocations(world)).stream().map(Location::getBlock).toList();
+    }
+
+    @Override
     public List<Position> getPositions() {
         Position pos1 = this.getMaxPosition();
         Position pos2 = this.getMinPosition();
@@ -183,6 +200,11 @@ public class Region implements Cloneable, ConfigurationSerializable {
         }
 
         return positions;
+    }
+
+    @Override
+    public World getWorld() {
+        return Bukkit.getWorld(world);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package dev.selixe.utils.bukkit.region;
 
 import com.google.common.collect.Lists;
+import dev.selixe.snapshot.Snapshotable;
 import dev.selixe.utils.bukkit.location.Position;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +22,7 @@ import java.util.*;
  */
 
 @Getter @Setter
-public class Cuboid implements Cloneable, ConfigurationSerializable {
+public class Cuboid implements Cloneable, ConfigurationSerializable, Snapshotable {
 
     private String world;
     private int maxX;
@@ -229,5 +230,10 @@ public class Cuboid implements Cloneable, ConfigurationSerializable {
         }
 
         return new Cuboid(world, NumberConversions.toInt(args.get("maxX")), NumberConversions.toInt(args.get("maxY")), NumberConversions.toInt(args.get("maxZ")), NumberConversions.toInt(args.get("minX")), NumberConversions.toInt(args.get("minY")), NumberConversions.toInt(args.get("minZ")));
+    }
+
+    @Override
+    public World getWorld() {
+        return Bukkit.getWorld(world);
     }
 }

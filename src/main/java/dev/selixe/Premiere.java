@@ -4,6 +4,8 @@ import dev.selixe.command.CommandHandler;
 import dev.selixe.command.impl.ColorCommand;
 import dev.selixe.event.PotionEffectEndEvent;
 import dev.selixe.menu.MenuAPI;
+import dev.selixe.snapshot.SnapshotManager;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,16 +16,21 @@ import org.bukkit.plugin.java.JavaPlugin;
  * permission from the original author: Selixe
  */
 
+@Getter
 public class Premiere extends JavaPlugin {
 
     public static Premiere getInstance() {
         return Premiere.getPlugin(Premiere.class);
     }
 
+    private SnapshotManager snapshotManager;
 
     @Override
     public void onEnable() {
         new MenuAPI(this);
+
+        this.snapshotManager = new SnapshotManager();
+
         CommandHandler.registerCommands(ColorCommand.class, this);
 
         CommandHandler.registerProcessors("dev.selixe.command.processors", this);
