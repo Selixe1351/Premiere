@@ -202,4 +202,5 @@ public abstract class Menu {
     public abstract String getTitle(Player paramPlayer);
 
     public abstract Map<Integer, Button> getButtons(Player paramPlayer);
+
 }

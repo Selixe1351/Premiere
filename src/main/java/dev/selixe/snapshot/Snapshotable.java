@@ -15,6 +15,8 @@ import java.util.Map;
  * Usage or redistribution of compiled JAR file and or source code is permitted only if given
  * permission from the original author: Selixe
  */
+
+// TODO: make async
 public interface Snapshotable {
 
     /**

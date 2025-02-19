@@ -1,11 +1,13 @@
 package dev.selixe.command.node;
 
+import dev.selixe.Premiere;
 import dev.selixe.command.Command;
 import dev.selixe.command.CommandHandler;
 import dev.selixe.command.bukkit.BukkitCommand;
 import dev.selixe.command.help.HelpNode;
 import dev.selixe.command.parameter.Param;
 import dev.selixe.command.parameter.ParamProcessor;
+import dev.selixe.utils.bukkit.ColorUtils;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
@@ -149,17 +151,26 @@ public class CommandNode {
      */
     public void sendUsageMessage(CommandSender sender) {
         if(consoleOnly && sender instanceof Player) {
-            sender.sendMessage(ChatColor.RED + "This command can only be executed by console.");
+            switch (Premiere.getInstance().getStyle()) {
+                case NORMAL -> sender.sendMessage(ColorUtils.translate("&cThis command can only be executed by console."));
+                case MODERN -> sender.sendMessage(ColorUtils.translate("&4&l[!] &cThis command can only be executed by robots."));
+            }
             return;
         }
 
         if(playerOnly && sender instanceof ConsoleCommandSender) {
-            sender.sendMessage(ChatColor.RED + "You must be a player to execute this command.");
+            switch (Premiere.getInstance().getStyle()) {
+                case NORMAL -> sender.sendMessage(ColorUtils.translate("&cYou must be a player to execute this command."));
+                case MODERN -> sender.sendMessage(ColorUtils.translate("&4&l[!] &cThis command can only be executed by humans."));
+            }
             return;
         }
 
         if(!permission.equals("") && !sender.hasPermission(permission)) {
-            sender.sendMessage(ChatColor.RED + "I'm sorry, although you do not have permission to execute this command.");
+            switch (Premiere.getInstance().getStyle()) {
+                case NORMAL -> sender.sendMessage(ColorUtils.translate("&cI'm sorry, although you do not have permission to execute this command."));
+                case MODERN -> sender.sendMessage(ColorUtils.translate("&4&l[!] &cYou may not execute this command."));
+            }
             return;
         }
 
@@ -194,19 +205,28 @@ public class CommandNode {
     public void execute(CommandSender sender, String[] args) {
         // Checks if the player has permission
         if(!permission.equals("") && !sender.hasPermission(permission)) {
-            sender.sendMessage(ChatColor.RED + "I'm sorry, although you do not have permission to execute this command.");
+            switch (Premiere.getInstance().getStyle()) {
+                case NORMAL -> sender.sendMessage(ColorUtils.translate("&cI'm sorry, although you do not have permission to execute this command."));
+                case MODERN -> sender.sendMessage(ColorUtils.translate("&4&l[!] &cYou may not execute this command."));
+            }
             return;
         }
 
         // Checks if command is console only
         if(sender instanceof ConsoleCommandSender && playerOnly) {
-            sender.sendMessage(ChatColor.RED + "You must be a player to execute this command.");
+            switch (Premiere.getInstance().getStyle()) {
+                case NORMAL -> sender.sendMessage(ColorUtils.translate("&cYou must be a player to execute this command."));
+                case MODERN -> sender.sendMessage(ColorUtils.translate("&4&l[!] &cThis command can only be executed by humans."));
+            }
             return;
         }
 
         // Checks if command is player only
         if(sender instanceof Player && consoleOnly) {
-            sender.sendMessage(ChatColor.RED + "This command is only executable by console.");
+            switch (Premiere.getInstance().getStyle()) {
+                case NORMAL -> sender.sendMessage(ColorUtils.translate("&cThis command can only be executed by console."));
+                case MODERN -> sender.sendMessage(ColorUtils.translate("&4&l[!] &cThis command can only be executed by robots."));
+            }
             return;
         }
 
@@ -218,7 +238,7 @@ public class CommandNode {
             if(parameters.size() < i + 1) break;
             ArgumentNode node = parameters.get(i);
 
-            // Checks if the node is concatted
+            // Checks if the node is concated
             if(node.isConcated()) {
                 StringBuilder stringBuilder = new StringBuilder();
                 for(int x = i; x < args.length; x++) {

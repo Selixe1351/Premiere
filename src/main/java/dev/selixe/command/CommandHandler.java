@@ -21,7 +21,7 @@ public class CommandHandler {
      * @param path Path
      */
     @SneakyThrows
-    public static void registerCommands(String path, Plugin plugin) {
+    public void registerCommands(String path, Plugin plugin) {
         ClassPath.from(plugin.getClass().getClassLoader()).getAllClasses().stream()
                 .filter(info -> info.getPackageName().startsWith(path))
                 .forEach(info -> registerCommands(info.load(), plugin));
@@ -32,7 +32,7 @@ public class CommandHandler {
      * @param commandClass Class
      */
     @SneakyThrows
-    public static void registerCommands(Class<?> commandClass, Plugin plugin) {
+    public void registerCommands(Class<?> commandClass, Plugin plugin) {
         CommandHandler.setPlugin(plugin);
         registerCommands(commandClass.newInstance());
     }
@@ -41,7 +41,7 @@ public class CommandHandler {
      * Registers the commands in the class
      * @param commandClass Class
      */
-    private static void registerCommands(Object commandClass) {
+    private void registerCommands(Object commandClass) {
         Arrays.stream(commandClass.getClass().getDeclaredMethods()).forEach(method -> {
             Command command = method.getAnnotation(Command.class);
             if(command == null) return;
@@ -66,7 +66,7 @@ public class CommandHandler {
      * @param path Path
      */
     @SneakyThrows
-    public static void registerProcessors(String path, Plugin plugin) {
+    public void registerProcessors(String path, Plugin plugin) {
         ClassPath.from(plugin.getClass().getClassLoader()).getAllClasses().stream()
                 .filter(info -> info.getPackageName().startsWith(path))
                 .filter(info -> info.load().getSuperclass().equals(Processor.class))
@@ -81,7 +81,7 @@ public class CommandHandler {
      * @param processorClass Class
      */
     @SneakyThrows
-    public static void registerProcessor(Class<?> processorClass, Plugin plugin) {
+    public void registerProcessor(Class<?> processorClass, Plugin plugin) {
         registerProcessors(processorClass.getPackageName(), plugin);
     }
 }

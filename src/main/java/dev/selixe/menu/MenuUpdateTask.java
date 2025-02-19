@@ -19,6 +19,7 @@ public class MenuUpdateTask extends BukkitRunnable {
             final Menu value = entry.getValue();
             final Player player = Bukkit.getPlayer(key);
             if (player != null && value.isAutoUpdate()) {
+
                 value.openMenu(player);
             }
         }
